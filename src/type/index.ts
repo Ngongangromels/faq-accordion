@@ -1,6 +1,6 @@
-export interface  Tprops {
-    id: number,
-    activeId: number,
-    onClick: () => void,
+export interface  FaqItem {
+    id: number
+    question: string
+    answer: string
 }
 

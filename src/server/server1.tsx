@@ -1,9 +1,9 @@
 
-import { TfaqAccordion } from "../type/typeComponent"
+import { FaqItem } from "../type/index"
 
 
 
-export async function getfaqAccordionById(faqId:number): Promise<TfaqAccordion[]> {
+export async function getFaqAccordionData(): Promise<FaqItem[]> {
     return  [
                { 
                 id:1,

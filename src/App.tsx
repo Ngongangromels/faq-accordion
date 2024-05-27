@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { getfaqAccordionById } from './server/server1';
-import { TfaqAccordion } from './type/typeComponent';
+import { getFaqAccordionData as getAccordionData } from "./server/server1";
+import { FaqItem } from './type/';
 import { BackgroundImage } from './component/BackgroundImage';
 import iconStar from './assets/images/iconStar.svg'
-import { FaqAccordion } from './component/FaqsAccordion';
+import { Accordion } from './component/Accordion';
 function App() {
-  const [faqsAccordion, setfaqAccordion] = useState<TfaqAccordion[] | null >(null)
+  const [faqs, setFaqs] = useState<FaqItem[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true)
-
-const [activeId, setActiveId] = useState(0)
-  const toogleClick = (id: number) => {
-    if(id != activeId){
-         
-      setActiveId(id)
-    }else{
-      setActiveId(0)
-    }
-  } 
 
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const faqAccordion = await getfaqAccordionById(1);
+      const Accordion = await getAccordionData();
       setTimeout(() => {
-        setfaqAccordion(faqAccordion);
+        setFaqs(Accordion);
         setLoading(false);
       }, 3500);
     })();
@@ -40,15 +29,9 @@ const [activeId, setActiveId] = useState(0)
         <img className='icon-star' src={iconStar} />
         <span className='title'>FAQs</span>
       </h1>
-      { loading ? <p className='loading'>Loading....</p> : <div className='faqAccordion'>
-        {faqsAccordion?.map((faq, id) =>
-           <FaqAccordion 
-           faq={faq}
-            key={id}
-            activeId={activeId}
-            toogleAccordion={toogleClick}
-             />
-       )}</div> }
+      { loading ? (<p className='loading'>Loading....</p> ): (<div className='faqAccordion'>
+      <Accordion items={faqs!} /> </div>)
+      }
      </section>
     </div>
 
